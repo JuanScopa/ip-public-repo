@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 def index_page(request):
     return render(request, 'index.html')
 
+
 # auxiliar: retorna 2 listados -> uno de las imágenes de la API y otro de los favoritos del usuario.
 def getAllImagesAndFavouriteList(request):
     images = services_nasa_image_gallery.getAllImages() #llamo a la función correspondiente del archivo services_nasa... y la guardo en "images"
