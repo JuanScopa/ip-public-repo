@@ -4,14 +4,24 @@ from nasa_image_gallery.layers.generic.nasa_card import NASACard
 
 # usado cuando la info. viene de la API de la nasa, para transformarlo en una NASACard.
 def fromRequestIntoNASACard(object):
-    nasa_card = NASACard(
-                        title=object['data'][0]['title'],
-                        description=object['data'][0]['description'], 
-                        image_url=object['links'][0]['href'], 
-                        date=object['data'][0]['date_created'][:10]
-                )
+    try:#Este try y el except está por si hay alguna imagen que da error en la descripción, buscando "artemis" hay una que da error y no deja buscar salvo que se modifique la desc. a mano
+        nasa_card = NASACard(
+                            title=object['data'][0]['title'],
+                            description=object['data'][0]['description'], 
+                            image_url=object['links'][0]['href'], 
+                            date=object['data'][0]['date_created'][:10]
+                    )
 
-    return nasa_card
+        return nasa_card
+    except Exception:
+        nasa_card = NASACard(
+                            title=object['data'][0]['title'],
+                            description="No hay descripción.", 
+                            image_url=object['links'][0]['href'], 
+                            date=object['data'][0]['date_created'][:10]
+                    )
+
+        return nasa_card
 
 
 # usado cuando la info. viene del template, para transformarlo en una NASACard antes de guardarlo en la base de datos.
